@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="320dp"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/image_shoe"
+            android:layout_width="0dp"
+            android:layout_height="260dp"
+            android:contentDescription="@string/home_shoe_image"
+            android:scaleType="fitStart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/image_shoe"
+            app:layout_constraintStart_toStartOf="@id/image_shoe"
+            app:layout_constraintTop_toBottomOf="@id/image_shoe" />
+
+        <TextView
+            android:id="@+id/text_price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="6dp"
+            android:textColor="@color/gray100"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/text_name"
+            app:layout_constraintStart_toStartOf="@id/text_name"
+            app:layout_constraintTop_toBottomOf="@id/text_name" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
