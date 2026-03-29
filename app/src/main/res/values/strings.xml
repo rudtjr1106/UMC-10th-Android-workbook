@@ -18,4 +18,5 @@
     <string name="purchase_tab_all">전체</string>
     <string name="purchase_tab_tops">Tops &amp; T-Shirts</string>
     <string name="purchase_tab_sale">sale</string>
+    <string name="purchase_empty_tab_message">아직 준비중인 카테고리입니다.</string>
 </resources>

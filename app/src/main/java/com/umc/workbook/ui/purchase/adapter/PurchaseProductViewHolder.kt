@@ -9,7 +9,7 @@ class PurchaseProductViewHolder(
     private val binding: ItemPurchaseProductBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(item: PurchaseProductItem) {
+    fun bind(item: PurchaseProductItem, delegate: PurchaseProductAdapter.Delegate) {
         binding.apply {
             imageProduct.setImageResource(item.imageResId)
             textBadge.text = if (item.badge) "Best Seller" else ""
@@ -18,6 +18,7 @@ class PurchaseProductViewHolder(
                 if (item.isWish) com.umc.workbook.R.drawable.ic_heart_circle_active
                 else com.umc.workbook.R.drawable.ic_heart_circle
             )
+            imageWish.setOnClickListener { delegate.onWishClick(item) }
             textName.text = item.name
             textDesc.text = item.desc
             textColors.text = item.colors

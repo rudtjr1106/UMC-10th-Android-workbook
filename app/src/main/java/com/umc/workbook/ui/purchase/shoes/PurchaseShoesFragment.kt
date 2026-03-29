@@ -1,4 +1,4 @@
-package com.umc.workbook.ui.wish
+package com.umc.workbook.ui.purchase.shoes
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,19 +8,23 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.umc.workbook.data.AppDataStore
-import com.umc.workbook.databinding.FragmentWishlistBinding
+import com.umc.workbook.databinding.FragmentPurchaseShoesBinding
 import com.umc.workbook.model.PurchaseProductItem
 import com.umc.workbook.ui.purchase.adapter.PurchaseProductAdapter
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class WishlistFragment : Fragment() {
+class PurchaseShoesFragment : Fragment() {
 
-    private lateinit var binding: FragmentWishlistBinding
+    private lateinit var binding: FragmentPurchaseShoesBinding
 
-    private val wishlistAdapter: PurchaseProductAdapter by lazy {
+    private val purchaseProductAdapter: PurchaseProductAdapter by lazy {
         PurchaseProductAdapter(object : PurchaseProductAdapter.Delegate {
-            override fun onWishClick(item: PurchaseProductItem) = Unit
+            override fun onWishClick(item: PurchaseProductItem) {
+                viewLifecycleOwner.lifecycleScope.launch {
+                    AppDataStore.togglePurchaseWish(requireContext(), item)
+                }
+            }
         })
     }
 
@@ -29,20 +33,20 @@ class WishlistFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentWishlistBinding.inflate(inflater, container, false)
-        initWishlistRecyclerView()
+        binding = FragmentPurchaseShoesBinding.inflate(inflater, container, false)
+        initPurchaseRecyclerView()
         return binding.root
     }
 
-    private fun initWishlistRecyclerView() {
-        binding.recyclerWishlist.apply {
+    private fun initPurchaseRecyclerView() {
+        binding.recyclerPurchase.apply {
             layoutManager = GridLayoutManager(requireContext(), 2)
-            adapter = wishlistAdapter
+            adapter = purchaseProductAdapter
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            AppDataStore.wishlistItemsFlow(requireContext()).collectLatest { items ->
-                wishlistAdapter.submitItems(items)
+            AppDataStore.purchaseItemsFlow(requireContext()).collectLatest { items ->
+                purchaseProductAdapter.submitItems(items)
             }
         }
     }

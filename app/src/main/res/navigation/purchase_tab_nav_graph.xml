@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/purchase_tab_nav_graph"
+    app:startDestination="@id/purchaseShoesFragment">
+
+    <fragment
+        android:id="@+id/purchaseShoesFragment"
+        android:name="com.umc.workbook.ui.purchase.shoes.PurchaseShoesFragment"
+        android:label="Shoes" />
+
+    <fragment
+        android:id="@+id/purchaseTopsFragment"
+        android:name="com.umc.workbook.ui.purchase.tops.PurchaseTopsFragment"
+        android:label="Tops" />
+
+    <fragment
+        android:id="@+id/purchaseSaleFragment"
+        android:name="com.umc.workbook.ui.purchase.sale.PurchaseSaleFragment"
+        android:label="Sale" />
+</navigation>
