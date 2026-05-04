@@ -5,8 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.umc.workbook.MainActivity
-import com.umc.workbook.R
 import com.umc.workbook.databinding.FragmentBagBinding
 
 class BagFragment : Fragment() {
@@ -20,13 +18,5 @@ class BagFragment : Fragment() {
     ): View {
         binding = FragmentBagBinding.inflate(inflater, container, false)
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        binding.btnOrder.setOnClickListener {
-            (activity as? MainActivity)?.navigateToBottomTab(R.id.nav_purchase)
-        }
     }
 }
