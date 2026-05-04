@@ -1,4 +1,4 @@
-package com.umc.workbook.model
+package com.umc.workbook.data.model
 
 import com.google.gson.annotations.SerializedName
 

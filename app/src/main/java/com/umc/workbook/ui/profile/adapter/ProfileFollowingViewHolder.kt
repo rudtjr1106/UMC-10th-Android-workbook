@@ -4,7 +4,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.umc.workbook.databinding.ItemProfileFollowingBinding
-import com.umc.workbook.model.ReqResUser
+import com.umc.workbook.data.model.ReqResUser
 
 class ProfileFollowingViewHolder(
     private val binding: ItemProfileFollowingBinding

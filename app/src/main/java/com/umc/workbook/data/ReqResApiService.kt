@@ -1,7 +1,7 @@
 package com.umc.workbook.data
 
-import com.umc.workbook.model.ReqResUserListResponse
-import com.umc.workbook.model.ReqResUserResponse
+import com.umc.workbook.data.model.ReqResUserListResponse
+import com.umc.workbook.data.model.ReqResUserResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

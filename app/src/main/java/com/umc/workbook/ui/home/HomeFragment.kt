@@ -5,17 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.umc.workbook.data.AppDataStore
 import com.umc.workbook.databinding.FragmentHomeBinding
 import com.umc.workbook.ui.home.adapter.HomeShoesAdapter
-import kotlinx.coroutines.flow.collectLatest
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
+    private val viewModel: HomeViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,17 +28,22 @@ class HomeFragment : Fragment() {
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         initShoesRecyclerView()
+        observeViewModel()
+        viewModel.loadHomeItems()
         return binding.root
     }
 
     private fun initShoesRecyclerView() {
         binding.recyclerShoes.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+    }
 
+    private fun observeViewModel() {
         viewLifecycleOwner.lifecycleScope.launch {
-            AppDataStore.seedIfEmpty(requireContext())
-            AppDataStore.homeItemsFlow(requireContext()).collectLatest { shoes ->
-                binding.recyclerShoes.adapter = HomeShoesAdapter(shoes)
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { uiState ->
+                    binding.recyclerShoes.adapter = HomeShoesAdapter(uiState.homeItems)
+                }
             }
         }
     }

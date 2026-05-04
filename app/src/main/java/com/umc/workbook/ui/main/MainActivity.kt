@@ -1,4 +1,4 @@
-package com.umc.workbook
+package com.umc.workbook.ui.main
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -7,8 +7,11 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.umc.workbook.R
 import com.umc.workbook.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding

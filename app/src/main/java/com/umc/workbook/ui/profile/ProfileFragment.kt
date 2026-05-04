@@ -5,19 +5,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
-import coil.load
-import coil.transform.CircleCropTransformation
-import com.umc.workbook.data.NetworkClient
 import com.umc.workbook.databinding.FragmentProfileBinding
 import com.umc.workbook.ui.profile.adapter.ProfileFollowingAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class ProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
     private val followingAdapter = ProfileFollowingAdapter()
+    private val viewModel: ProfileViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,9 +28,11 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.vm = viewModel
         setupFollowingRecyclerView()
-        fetchProfileUser()
-        fetchFollowingUsers()
+        observeViewModel()
+        viewModel.loadProfileData()
         return binding.root
     }
 
@@ -38,34 +43,14 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private fun fetchProfileUser() {
+    private fun observeViewModel() {
         viewLifecycleOwner.lifecycleScope.launch {
-            runCatching {
-                NetworkClient.reqResApiService.getUser(1)
-            }.onSuccess { response ->
-                val user = response.data
-                binding.apply {
-                    textProfileNickname.text = getString(
-                        com.umc.workbook.R.string.profile_name_format,
-                        user.firstName,
-                        user.lastName
-                    )
-                    textProfileEmail.text = user.email
-                    imageProfileAvatar.load(user.avatar) {
-                        transformations(CircleCropTransformation())
-                    }
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { uiState ->
+                    followingAdapter.submitList(uiState.followingUsers)
                 }
             }
         }
     }
 
-    private fun fetchFollowingUsers() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            runCatching {
-                NetworkClient.reqResApiService.getUsers(page = 1)
-            }.onSuccess { response ->
-                followingAdapter.submitList(response.data)
-            }
-        }
-    }
 }

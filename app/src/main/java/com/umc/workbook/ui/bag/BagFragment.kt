@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.umc.workbook.MainActivity
+import com.umc.workbook.ui.main.MainActivity
 import com.umc.workbook.R
 import com.umc.workbook.databinding.FragmentBagBinding
 

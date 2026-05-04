@@ -3,6 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <import type="com.umc.workbook.R" />
+
+        <variable
+            name="vm"
+            type="com.umc.workbook.ui.profile.ProfileViewModel" />
+    </data>
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -29,14 +37,15 @@
                     android:layout_height="84dp"
                     android:contentDescription="@string/profile_avatar_desc"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/bg_profile_avatar_placeholder" />
+                    android:src="@drawable/bg_profile_avatar_placeholder"
+                    app:profileAvatarUrl="@{vm.uiState.profileUser.avatar}" />
 
                 <TextView
                     android:id="@+id/text_profile_nickname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
-                    android:text="@string/profile_nickname"
+                    android:text='@{vm.uiState.profileUser != null ? @string/profile_name_format(vm.uiState.profileUser.firstName, vm.uiState.profileUser.lastName) : @string/profile_nickname}'
                     android:textColor="@color/black"
                     android:textSize="24sp"
                     android:textStyle="bold" />
@@ -216,7 +225,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
-                    android:text="@string/profile_available_count"
+                    android:text='@{vm.uiState.profileUser != null ? vm.uiState.profileUser.email : @string/profile_available_count}'
                     android:textColor="@color/gray100"
                     android:textSize="12sp" />
             </LinearLayout>

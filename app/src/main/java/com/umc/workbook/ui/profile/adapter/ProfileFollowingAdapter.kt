@@ -3,7 +3,7 @@ package com.umc.workbook.ui.profile.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.umc.workbook.model.ReqResUser
+import com.umc.workbook.data.model.ReqResUser
 import com.umc.workbook.databinding.ItemProfileFollowingBinding
 
 class ProfileFollowingAdapter(
